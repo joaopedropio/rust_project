@@ -3,6 +3,7 @@ use std::fmt::Formatter;
 use uuid::Uuid;
 use std::str::FromStr;
 use fmt::Display;
+use chrono::prelude::*;
 
 pub enum PaymentBrand {
     None,
@@ -76,6 +77,7 @@ pub struct Payment {
     pub installment: i32,
     pub method: PaymentMethod,
     pub brand: PaymentBrand,
+    pub created_at: NaiveDate,
 }
 
 impl Payment {
@@ -88,6 +90,7 @@ impl Payment {
             installment: 0,
             method: PaymentMethod::Credit,
             brand: PaymentBrand::None,
+            created_at: Utc::now().date_naive(),
         }
     }
 }

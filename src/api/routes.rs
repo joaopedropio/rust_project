@@ -1,20 +1,6 @@
-use tide::Request;
-use crate::api::payment_handler::PaymentHandler;
-use crate::dependencies::Dependencies;
+use crate::api::payment_handler::{create_payment_handler};
+use crate::State;
 
-pub struct Api {
-
-    pub payment_handler: PaymentHandler,
-}
-
-impl Api {
-    pub fn new(dep: Dependencies) -> Api {
-        Api {
-            payment_handler: PaymentHandler::new(dep)
-        }
-    }
-
-    pub fn configure_routes(&self, app: &mut tide::Server<()>) {
-        app.at("/payment").post(&self.payment_handler.create_payment_handler);
-    }
+pub fn configure_routes(app: &mut tide::Server<State>) {
+    app.at("/payment").post(create_payment_handler);
 }

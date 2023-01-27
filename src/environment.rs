@@ -1,3 +1,4 @@
+extern crate dotenv;
 pub use self::environment::Environment;
 
 pub mod environment {
@@ -8,12 +9,8 @@ pub mod environment {
     impl Environment {
         pub fn build() -> Environment {
             dotenv::dotenv().ok();
-
-            for (key, value) in std::env::vars() {
-                println!("{}: {}", key, value);
-            }
             Environment {
-                postgres_password: String::from("mysecretpassword"),
+                postgres_password: std::env::var("DATABASE_URL").unwrap(),
             }
         }
     }
